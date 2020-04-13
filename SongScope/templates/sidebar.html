@@ -1,0 +1,96 @@
+{#<div class="container" xmlns="http://www.w3.org/1999/html">#}
+    <div class="col-3  sidebar">
+        <div class="sidebar-sticky">
+            <ul class="nav flex-column">
+                <li class="nav-item  mx-2">
+                    <form method="post" role="form" action=".">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            {{ input_form }}
+                        </div>
+                        <button type="submit" class="btn btn-primary">Search Music</button>
+                    </form>
+                </li>
+
+            </ul>
+
+            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-4 text-muted">
+                <span>SEARCH RESULTS</span>
+                <span data-feather="plus-circle"></span>
+            </h6>
+            {##}
+            {#            <div class="container">#}
+            {#                <div class="col-3  bg-dark sidebar shadow">#}
+            {#                    <div class="sidebar-sticky">#}
+            {#                        <ul class="nav flex-column">#}
+            {#                            <li class="nav-item">#}
+            {#                                <form method="post" role="form" action=".">#}
+            {#                                    {% csrf_token %}#}
+            {#                                    <div class="form-group">#}
+            {#                                        {{ input_form }}#}
+            {#                                    </div>#}
+            {#                                    <button type="submit" class="btn btn-primary">Search Artist</button>#}
+            {#                                </form>#}
+            {#                            </li>#}
+            {##}
+            {#                        </ul>#}
+            {##}
+            {#                        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-4 text-muted">#}
+            {#                            <span>SEARCH RESULTS</span>#}
+            {#                            <span data-feather="plus-circle"></span>#}
+            {#                        </h6>#}
+            {##}
+            <ul class="nav mb-2">
+                {% for value in paycontent %}
+                    <li class="nav-item d-flex " >
+                        <a class="stretched-link"
+                           href="javascript:submitform({{ value }})">
+{#                           href="javascript:submitform({{ value.songId }},{{ value.albumId }},{{ value.song }},{{ value.artist }}, {{ value.userInput }})">#}
+                            <div class=container>
+                                <div class="card border-0 mb-3 text-wrap">
+                                    <div class="row no-gutters ">
+
+                                            <img src="{{ value.image }}" class="p-1" width="92" height="92">
+
+
+                                            <div>
+                                                <h6>{{ value.artist }}</h6>
+                                                <p class="card-text">{{ value.song }}</p>
+                                            </div>
+
+{#                                        <div class="col">#}
+                                            <form name="{{value.song}}" action="." method="post">
+                                                {% csrf_token %}
+                                                {{ selection_form.as_p }}
+                                                <input type="hidden" name="songSelection"
+                                                       value="{{ value.songId }}">
+                                                <input type="hidden" name="albumSelection"
+                                                       value="{{ value.albumId }}">
+                                                <input type="hidden" name="track" value="{{ value.song }}">
+                                                <input type="hidden" name="artist" value="{{ value.artist }}">
+                                                <input type="hidden" name="userInput"
+                                                       value="{{ value.userInput }}">
+
+                                                {#                                            <button type="submit" class="btn btn-primary">Analyze</button>#}
+                                            </form>
+{#                                        </div>#}
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                {% endfor %}
+
+
+            </ul>
+            {#                    </div>#}
+        </div>
+    </div>
+</div>
+</div>
+{#</div>#}
+{##}
+{##}
+{##}
+{##}
+{##}

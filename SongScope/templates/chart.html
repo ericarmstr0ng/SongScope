@@ -1,0 +1,181 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <main role="main" class="ml-sm-auto col-lg-9 px-4">
+        {#    Track Information        #}
+        <div class="row mb-2">
+            <div class="col">
+                <div class="card border-0">
+                    <div class="card-body">
+                        <h6>Song</h6>
+                        <h3 class="card-title">{{ songName }}</h3>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col">
+                                    <p>Artist: {{ artist }}</p>
+                                    <p>Length: {{ datacontent.time }}</p>
+                                    <p>Key: {{ datacontent.key }}</p>
+                                    <p>Popularity: {{ datacontent.popularity }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {#    Album Information        #}
+            <div class="col">
+                <div class="card border-0">
+                    <div class="card-body">
+                        <h6>Album</h6>
+                        <h3 class="card-title">{{ albumcontent.name }}</h3>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col">
+                                    <p>Label: {{ albumcontent.label }}</p>
+                                    <p>Copyright: {{ albumcontent.copyrights }}</p>
+                                    <p>Release Date: {{ albumcontent.release_date }}</p>
+                                    <p>Popularity: {{ albumcontent.popularity }}</p>
+                                </div>
+                                <div class="col">
+                                    <img src="{{ albumcontent.image }}" height="125" width="125">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+{#            <div class="col-md-3">#}
+{#                <div class="card">#}
+{#                    <div class="card-body">#}
+{#                        <h6>Song</h6>#}
+{#                        <h3 class="card-title">{{ songName }}</h3>#}
+{##}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+            <div class="container">
+                <script>
+
+                    $(document).ready(function () {
+
+                        var endpoint = 'data/'
+                        var defaultData = []
+                        var labels = [];
+                        $.ajax({
+                            method: "GET",
+                            url: endpoint,
+                            success: function (data) {
+                                labels = data.labels
+                                defaultData = data.default
+                                setChart()
+                            },
+                            error: function (error_data) {
+                                console.log("error")
+                                console.log(error_data)
+                            }
+                        })
+
+                        function setChart() {
+                            var ctx = document.getElementById("myChart");
+                            var ctx2 = document.getElementById("myChart2");
+                            var myChart = new Chart(ctx2, {
+                                type: 'line',
+                                data: {
+                                    labels: labels,
+                                    datasets: [{
+                                        label: 'Percent of Makeup',
+                                        data: {{ datacontent.makeup }},
+                                        backgroundColor: [
+                                            'rgba(255, 99, 132, 0.2)',
+                                            'rgba(54, 162, 235, 0.2)',
+                                            'rgba(255, 206, 86, 0.2)',
+                                            'rgba(75, 192, 192, 0.2)',
+                                            'rgba(153, 102, 255, 0.2)',
+                                            'rgba(255, 159, 64, 0.2)'
+                                        ],
+                                        borderColor: [
+                                            'rgba(255,99,132,1)',
+                                            'rgba(54, 162, 235, 1)',
+                                            'rgba(255, 206, 86, 1)',
+                                            'rgba(75, 192, 192, 1)',
+                                            'rgba(153, 102, 255, 1)',
+                                            'rgba(255, 159, 64, 1)'
+                                        ],
+                                        borderWidth: 1
+                                    }]
+                                },
+                                options: {
+                                    scales: {
+                                        yAxes: [{
+                                            ticks: {
+                                                beginAtZero: true
+                                            }
+                                        }]
+                                    }
+                                }
+                            });
+                            var myChart = new Chart(ctx, {
+                                type: 'polarArea',
+                                data: {
+                                    labels: labels,
+                                    datasets: [{
+                                        label: '# of Votes',
+                                        data: {{ datacontent.makeup }},
+                                        backgroundColor: [
+                                            'rgba(255, 99, 132, 0.2)',
+                                            'rgba(54, 162, 235, 0.2)',
+                                            'rgba(255, 206, 86, 0.2)',
+                                            'rgba(75, 192, 192, 0.2)',
+                                            'rgba(153, 102, 255, 0.2)',
+                                            'rgba(255, 159, 64, 0.2)'
+                                        ],
+                                        borderColor: [
+                                            'rgba(255,99,132,1)',
+                                            'rgba(54, 162, 235, 1)',
+                                            'rgba(255, 206, 86, 1)',
+                                            'rgba(75, 192, 192, 1)',
+                                            'rgba(153, 102, 255, 1)',
+                                            'rgba(255, 159, 64, 1)'
+                                        ],
+                                        borderWidth: 1
+                                    }]
+                                },
+                                options: {
+                                    scales: {
+                                        yAxes: [{
+                                            ticks: {
+                                                beginAtZero: true
+                                            }
+                                        }]
+                                    }
+                                }
+                            });
+                        }
+                    })
+                    // var ctx = document.getElementById("myChart");
+                </script>
+
+
+                <div class='row justify-content-around'>
+{#                    <div class='col' url-endpoint='{% url "get_data" %}'>#}
+{#                        <h1>{{ songName }} Analysis</h1>#}
+                        <div class='col-4'>
+                            <canvas id="myChart" width="200" height="200"></canvas>
+                        </div>
+                        <div class='col-4'>
+                            <canvas id="myChart2" width="200" height="200"></canvas>
+                        </div>
+
+
+{#                    </div>#}
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+{% endblock %}

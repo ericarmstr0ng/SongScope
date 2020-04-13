@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript">
+
+        {#function submitform ( songId, albumId, song, artist, userInput )#}
+        function submitform(value)
+        {
+            song = value.song
+          document.forms[song].songSelection.value = value.songId;
+          document.forms[song].albumSelection.value = value.albumId;
+          document.forms[song].track.value = value.song;
+          document.forms[song].artist.value = value.artist;
+          document.forms[song].userInput.value = value.userInput;
+          document.forms[song].submit() ;
+          return false;
+        }
+
+    </script>
+
+    <title>SongScope</title>
+
+    {% include 'base/css.html' %}
+    {% include 'base/js.html' %}
+    {% load static %}
+</head>
+
+<body>
+
+<nav class="navbar fixed-top flex-md-nowrap p-0">
+    <a class="navbar-brand col-sm-3 col-md-3 mr-0">SongScope: Music Analysis</a>
+</nav>
+
+{% include 'sidebar.html' %}
+
+
+{% block content %}
+
+{% endblock %}
+
+
+</body>
+</html>
+
+
+{#export SPOTIPY_CLIENT_ID='6a934d663b824797afe49b8b504a70b8'#}
+{##}
+{#export SPOTIPY_CLIENT_SECRET='317dc8d592094d9fb2fe1c6abbc8e7a7'#}
+{##}
+{#export SPOTIPY_REDIRECT_URI='http://localhost/'#}
